@@ -1,14 +1,18 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 
 const App = (props) => {
   const {errorCount} = props;
-  return (<WelcomeScreen errorCount={errorCount} />);
+  const onWelcomeButtonPressed = () => {
+    // console.log(`Welcome Button Pressed`);
+  };
+
+  return (<WelcomeScreen errorCount={errorCount} onWelcomeButtonPressed={onWelcomeButtonPressed} />);
 };
 
 App.propTypes = {
-  errorCount: propTypes.number.isRequired,
+  errorCount: PropTypes.number.isRequired,
 };
 
 export default App;
