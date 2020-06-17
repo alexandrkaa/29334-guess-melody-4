@@ -1,7 +1,12 @@
 import React from 'react';
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 
-const GenreQuestionScreen = () => {
+const GenreQuestionScreen = (props) => {
+  const {question} = props;
+  const {
+    answers,
+    // genre,
+  } = question;
   return (
     <section className="game game--genre">
       <header className="game__header">
@@ -25,7 +30,7 @@ const GenreQuestionScreen = () => {
       <section className="game__screen">
         <h2 className="game__title">Выберите инди-рок треки</h2>
         <form className="game__tracks">
-          <div className="track">
+          {/* <div className="track">
             <button className="track__button track__button--play" type="button"></button>
             <div className="track__status">
               <audio></audio>
@@ -67,13 +72,48 @@ const GenreQuestionScreen = () => {
               <input className="game__input visually-hidden" type="checkbox" name="answer" value="answer-1" id="answer-4" />
               <label className="game__check" htmlFor="answer-4">Отметить</label>
             </div>
-          </div>
+          </div> */}
+
+          {answers.map((answer, i) => (
+            <div key={`${i}-${answer.src}`} className="track">
+              <button className="track__button track__button--play" type="button"/>
+              <div className="track__status">
+                <audio
+                  src={answer.src}
+                />
+              </div>
+              <div className="game__answer">
+                <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${i}`}
+                  id={`answer-${i}`}
+
+                />
+                <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
+              </div>
+            </div>
+          ))}
 
           <button className="game__submit button" type="submit">Ответить</button>
         </form>
       </section>
     </section>
   );
+};
+
+GenreQuestionScreen.propTypes = {
+  question: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    genre: PropTypes.string,
+    song: PropTypes.shape({
+      artist: PropTypes.string,
+      src: PropTypes.string
+    }),
+    answers: PropTypes.arrayOf(
+        PropTypes.shape({
+          src: PropTypes.string,
+          genre: PropTypes.string,
+        }).isRequired
+    ).isRequired,
+  }).isRequired
 };
 
 export default GenreQuestionScreen;
