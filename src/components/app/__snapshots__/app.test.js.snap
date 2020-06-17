@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Render App 1`] = `
+exports[`<App /> should render <App /> should render 5 erros 1`] = `
 <section
   className="welcome"
 >
@@ -42,7 +42,7 @@ exports[`Render App 1`] = `
     </li>
     <li>
       Можно допустить 
-      1
+      5
        ошибки.
     </li>
   </ul>

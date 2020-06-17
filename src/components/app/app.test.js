@@ -1,51 +1,24 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import App from "./app.jsx";
 
+import React from 'react';
+import renderer from 'react-test-renderer';
+import App from './app.jsx';
 
-const questions = [
-  {
-    type: `genre`,
-    genre: `rock`,
-    answers: [{
-      src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
-      genre: `rock`,
-    }, {
-      src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
-      genre: `blues`,
-    }, {
-      src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
-      genre: `jazz`,
-    }, {
-      src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
-      genre: `rock`,
-    }],
-  }, {
-    type: `artist`,
-    song: {
-      artist: `Jim Beam`,
-      src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
-    },
-    answers: [{
-      picture: `https://api.adorable.io/avatars/128/1`,
-      artist: `John Snow`,
-    }, {
-      picture: `https://api.adorable.io/avatars/128/2`,
-      artist: `Jack Daniels`,
-    }, {
-      picture: `https://api.adorable.io/avatars/128/3`,
-      artist: `Jim Beam`,
-    }],
-  },
-];
+const mockData = {
+  errorCount: 5,
+};
 
-it(`Render App`, () => {
-  const tree = renderer
-    .create(<App
-      errorCount={1}
-      questions={questions}
-    />)
-    .toJSON();
+// Вы можете запустить все тесты или только определённый
+// npm run test.jest -- -t '<WelcomeScreen /> should render 5 erros'
+describe(`<App /> should render`, () => {
 
-  expect(tree).toMatchSnapshot();
+  it(`<App /> should render 5 erros`, () => {
+    const {errorCount} = mockData;
+    const tree = renderer
+      .create(
+          <App errorCount={errorCount} />
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
 });
