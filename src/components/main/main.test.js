@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import App from "./app.jsx";
+import Main from "./main.jsx";
 
 
 const questions = [
@@ -41,7 +41,7 @@ const questions = [
 
 it(`Render App`, () => {
   const tree = renderer
-    .create(<App
+    .create(<Main
       errorCount={1}
       questions={questions}
     />)

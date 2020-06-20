@@ -7,8 +7,6 @@ const mockData = {
   onWelcomeButtonPressed: () => {},
 };
 
-// Вы можете запустить все тесты или только определённый
-// npm run test.jest -- -t '<WelcomeScreen /> should render 5 erros'
 describe(`<WelcomeScreen /> should render`, () => {
 
   it(`<WelcomeScreen /> should render 5 erros`, () => {
