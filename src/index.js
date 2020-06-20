@@ -5,7 +5,7 @@ import mocks from './mocks/questions.js';
 
 const init = () => {
   const settings = {
-    errorCount: 12,
+    errorCount: 3,
   };
   ReactDOM.render(
       <App questions={mocks} errorCount={settings.errorCount} />,

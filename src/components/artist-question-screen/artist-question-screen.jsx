@@ -5,7 +5,6 @@ const ArtistQuestionScreen = (props) => {
   const {question, onAnswer} = props;
   const {
     answers,
-    // song,
   } = question;
   return (
     <section className="game game--artist">
@@ -37,29 +36,6 @@ const ArtistQuestionScreen = (props) => {
         </div>
 
         <form className="game__artist">
-          {/* <div className="artist">
-            <input className="artist__input visually-hidden" type="radio" name="answer" value="artist-1" id="answer-1" />
-            <label className="artist__name" htmlFor="answer-1">
-              <img className="artist__picture" src="http://placehold.it/134x134" alt="Пелагея" />
-              Пелагея
-            </label>
-          </div>
-
-          <div className="artist">
-            <input className="artist__input visually-hidden" type="radio" name="answer" value="artist-2" id="answer-2" />
-            <label className="artist__name" htmlFor="answer-2">
-              <img className="artist__picture" src="http://placehold.it/134x134" alt="Пелагея" />
-              Краснознаменная дивизия имени моей бабушки
-            </label>
-          </div>
-
-          <div className="artist">
-            <input className="artist__input visually-hidden" type="radio" name="answer" value="artist-3" id="answer-3" />
-            <label className="artist__name" htmlFor="answer-3">
-              <img className="artist__picture" src="http://placehold.it/134x134" alt="Пелагея" />
-              Lorde
-            </label>
-          </div> */}
           {answers.map((answer, i) => (
             <div key={answer.artist} className="artist">
               <input className="artist__input visually-hidden" type="radio" name="answer" value={`answer-${i}`} id={`answer-${i}`}

@@ -57,7 +57,7 @@ class GenreQuestionScreen extends PureComponent {
                   />
                 </div>
                 <div className="game__answer">
-                  <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${i}`}
+                  <input className="game__input visually-hidden" type="checkbox" name="answer"
                     id={`answer-${i}`}
                     checked={userAnswers[i]}
                     onChange={(evt) => {
@@ -84,7 +84,6 @@ class GenreQuestionScreen extends PureComponent {
 GenreQuestionScreen.propTypes = {
   onAnswer: PropTypes.func.isRequired,
   question: PropTypes.shape({
-    // type: PropTypes.string.isRequired,
     genre: PropTypes.string,
     song: PropTypes.shape({
       artist: PropTypes.string,
