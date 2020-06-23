@@ -12,50 +12,65 @@ class Main extends PureComponent {
     this.state = {
       step: -1,
     };
+
+    this._toNextStep = this._toNextStep.bind(this);
+    this._renderWelcomeScreen = this._renderWelcomeScreen.bind(this);
+    this._renderArtistQuestionScreen = this._renderArtistQuestionScreen.bind(this);
+    this._renderGenreQuestionScreen = this._renderGenreQuestionScreen.bind(this);
+  }
+
+  _toNextStep() {
+    this.setState((prevState) => ({
+      step: prevState.step + 1,
+    }));
+  }
+
+  _renderWelcomeScreen(errorCount) {
+    return (
+      <WelcomeScreen
+        errorCount={errorCount}
+        onWelcomeButtonPressed={this._toNextStep}
+      />
+    );
+  }
+
+  _renderArtistQuestionScreen(question) {
+    return (
+      <ArtistQuestionScreen
+        question={question}
+        onAnswer={this._toNextStep}
+      />
+    );
+  }
+
+  _renderGenreQuestionScreen(question) {
+    return (
+      <GenreQuestionScreen
+        question={question}
+        onAnswer={this._toNextStep}
+      />
+    );
   }
 
   render() {
     const {errorCount, questions} = this.props;
-    const {step} = this.state;
+    let {step} = this.state;
     const question = questions[step];
 
-    if (step === -1 || step >= questions.length) {
-      return (
-        <WelcomeScreen
-          errorCount={errorCount}
-          onWelcomeButtonPressed={() => {
-            this.setState({
-              step: 0,
-            });
-          }}
-        />
-      );
+    if (step >= questions.length) {
+      step = -1;
+    }
+
+    if (step === -1) {
+      return this._renderWelcomeScreen(errorCount);
     }
 
     if (question) {
       switch (question.type) {
         case GameType.ARTIST:
-          return (
-            <ArtistQuestionScreen
-              question={question}
-              onAnswer={() => {
-                this.setState((prevState) => ({
-                  step: prevState.step + 1,
-                }));
-              }}
-            />
-          );
+          return this._renderArtistQuestionScreen(question);
         case GameType.GENRE:
-          return (
-            <GenreQuestionScreen
-              question={question}
-              onAnswer={() => {
-                this.setState((prevState) => ({
-                  step: prevState.step + 1,
-                }));
-              }}
-            />
-          );
+          return this._renderGenreQuestionScreen(question);
       }
     }
 
