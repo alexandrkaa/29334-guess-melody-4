@@ -4,6 +4,9 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Main from '../main/main.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
+import withAudioPlayer from "../../hocs/with-audio-player/with-audio-player.js";
+const GenreQuestionScreenWrapped = withAudioPlayer(GenreQuestionScreen);
+const ArtistQuestionScreenWrapped = withAudioPlayer(ArtistQuestionScreen);
 
 const App = (props) => {
   const {questions, errorCount} = props;
@@ -15,13 +18,13 @@ const App = (props) => {
           <Main questions={questions} errorCount={errorCount} />
         </Route>
         <Route exact path="/artist">
-          <ArtistQuestionScreen
+          <ArtistQuestionScreenWrapped
             question={questions[1]}
             onAnswer={() => {}}
           />
         </Route>
         <Route exact path="/genre">
-          <GenreQuestionScreen
+          <GenreQuestionScreenWrapped
             question={questions[0]}
             onAnswer={() => {}}
           />
