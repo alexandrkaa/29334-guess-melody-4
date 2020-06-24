@@ -27,7 +27,7 @@ class Main extends PureComponent {
     this.setState((prevState) => {
       return {
         step: (prevState.step + 1) > this.props.questions.length - 1 ? -1 : (prevState.step + 1),
-      }
+      };
     });
   }
 
