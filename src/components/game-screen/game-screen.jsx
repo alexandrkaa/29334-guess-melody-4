@@ -28,7 +28,6 @@ const GameScreen = (props) => {
           <div className="wrong" />
         </div>
       </header>
-
       {children}
     </section>
   );

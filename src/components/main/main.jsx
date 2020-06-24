@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
+import GameScreen from '../game-screen/game-screen.jsx';
+
 import {GameType} from "../../const.js";
 
 class Main extends PureComponent {
@@ -36,19 +38,23 @@ class Main extends PureComponent {
 
   _renderArtistQuestionScreen(question) {
     return (
-      <ArtistQuestionScreen
-        question={question}
-        onAnswer={this._toNextStep}
-      />
+      <GameScreen type={question.type}>
+        <ArtistQuestionScreen
+          question={question}
+          onAnswer={this._toNextStep}
+        />
+      </GameScreen>
     );
   }
 
   _renderGenreQuestionScreen(question) {
     return (
-      <GenreQuestionScreen
-        question={question}
-        onAnswer={this._toNextStep}
-      />
+      <GameScreen type={question.type}>
+        <GenreQuestionScreen
+          question={question}
+          onAnswer={this._toNextStep}
+        />
+      </GameScreen>
     );
   }
 
