@@ -22,9 +22,11 @@ class Main extends PureComponent {
   }
 
   _toNextStep() {
-    this.setState((prevState) => ({
-      step: prevState.step + 1,
-    }));
+    this.setState((prevState) => {
+      return {
+        step: (prevState.step + 1) > this.props.questions.length - 1 ? -1 : (prevState.step + 1),
+      }
+    });
   }
 
   _renderWelcomeScreen(errorCount) {
@@ -62,10 +64,6 @@ class Main extends PureComponent {
     const {errorCount, questions} = this.props;
     let {step} = this.state;
     const question = questions[step];
-
-    if (step >= questions.length) {
-      step = -1;
-    }
 
     if (step === -1) {
       return this._renderWelcomeScreen(errorCount);
