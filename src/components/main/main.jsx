@@ -4,8 +4,10 @@ import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import GameScreen from '../game-screen/game-screen.jsx';
-
 import {GameType} from "../../const.js";
+import withAudioPlayer from "../../hocs/with-audio-player/with-audio-player.js";
+const GenreQuestionScreenWrapped = withAudioPlayer(GenreQuestionScreen);
+const ArtistQuestionScreenWrapped = withAudioPlayer(ArtistQuestionScreen);
 
 class Main extends PureComponent {
   constructor(props) {
@@ -41,7 +43,7 @@ class Main extends PureComponent {
   _renderArtistQuestionScreen(question) {
     return (
       <GameScreen type={question.type}>
-        <ArtistQuestionScreen
+        <ArtistQuestionScreenWrapped
           question={question}
           onAnswer={this._toNextStep}
         />
@@ -52,7 +54,7 @@ class Main extends PureComponent {
   _renderGenreQuestionScreen(question) {
     return (
       <GameScreen type={question.type}>
-        <GenreQuestionScreen
+        <GenreQuestionScreenWrapped
           question={question}
           onAnswer={this._toNextStep}
         />
