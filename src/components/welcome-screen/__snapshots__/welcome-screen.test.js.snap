@@ -42,7 +42,7 @@ exports[`<WelcomeScreen /> should render <WelcomeScreen /> should render 5 erros
     </li>
     <li>
       Можно допустить 
-      5
+      3
        ошибки.
     </li>
   </ul>

@@ -16,7 +16,7 @@ describe(`Welcome button press`, () => {
     const onWelcomeButtonPressed = jest.fn();
     const welcomeScreen = shallow(
         <WelcomeScreen
-          errorCount={mockData.errorCount}
+          errorsCount={mockData.errorCount}
           onWelcomeButtonPressed={onWelcomeButtonPressed}
         />
     );

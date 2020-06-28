@@ -417,6 +417,7 @@ exports[`Render App Render WelcomeScreen 1`] = `
     </li>
     <li>
       Можно допустить 
+      3
        ошибки.
     </li>
   </ul>

@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import WelcomeScreen from './welcome-screen.jsx';
 
 const mockData = {
-  errorCount: 5,
+  errorCount: 3,
   onWelcomeButtonPressed: () => {},
 };
 
@@ -13,7 +13,10 @@ describe(`<WelcomeScreen /> should render`, () => {
     const {errorCount, onWelcomeButtonPressed} = mockData;
     const tree = renderer
       .create(
-          <WelcomeScreen errorCount={errorCount} onWelcomeButtonPressed={onWelcomeButtonPressed} />
+          <WelcomeScreen
+            errorsCount={errorCount}
+            onWelcomeButtonPressed={onWelcomeButtonPressed}
+          />
       )
       .toJSON();
     expect(tree).toMatchSnapshot();
