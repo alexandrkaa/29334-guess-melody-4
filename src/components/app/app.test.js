@@ -1,7 +1,10 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import App from "./app.jsx";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 
+const mockStore = configureStore([]);
 
 const questions = [
   {
@@ -40,11 +43,24 @@ const questions = [
 ];
 
 it(`Render App`, () => {
+  const store = mockStore({
+    mistakes: 0,
+    step: 0,
+    maxMistakes: 3,
+    questions,
+  });
   const tree = renderer
-    .create(<App
-      errorCount={1}
-      questions={questions}
-    />)
+    .create(
+        <Provider store={store}>
+          <App
+            questions={questions}
+          />
+        </Provider>, {
+          createNodeMock: () => {
+            return {};
+          }
+        }
+    )
     .toJSON();
 
   expect(tree).toMatchSnapshot();

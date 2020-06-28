@@ -1,5 +1,7 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from "react-redux";
+import {ActionCreator} from "../../reducer.js";
 import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
@@ -9,83 +11,68 @@ import withAudioPlayer from "../../hocs/with-audio-player/with-audio-player.js";
 const GenreQuestionScreenWrapped = withAudioPlayer(GenreQuestionScreen);
 const ArtistQuestionScreenWrapped = withAudioPlayer(ArtistQuestionScreen);
 
-class Main extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      step: -1,
-    };
-
-    this._toNextStep = this._toNextStep.bind(this);
-    this._renderWelcomeScreen = this._renderWelcomeScreen.bind(this);
-    this._renderArtistQuestionScreen = this._renderArtistQuestionScreen.bind(this);
-    this._renderGenreQuestionScreen = this._renderGenreQuestionScreen.bind(this);
-  }
-
-  _toNextStep() {
-    this.setState((prevState) => {
-      return {
-        step: (prevState.step + 1) > this.props.questions.length - 1 ? -1 : (prevState.step + 1),
-      };
-    });
-  }
-
-  _renderWelcomeScreen(errorCount) {
+const Main = (props) => {
+  const {
+    maxMistakes,
+    questions,
+    onUserAnswer,
+    onWelcomeButtonClick,
+    step,
+  } = props;
+  const _renderWelcomeScreen = () => {
     return (
       <WelcomeScreen
-        errorCount={errorCount}
-        onWelcomeButtonPressed={this._toNextStep}
+        errorsCount={maxMistakes}
+        onWelcomeButtonPressed={onWelcomeButtonClick}
       />
     );
-  }
+  };
 
-  _renderArtistQuestionScreen(question) {
+  const _renderArtistQuestionScreen = (question) => {
     return (
       <GameScreen type={question.type}>
         <ArtistQuestionScreenWrapped
           question={question}
-          onAnswer={this._toNextStep}
+          onAnswer={onUserAnswer}
         />
       </GameScreen>
     );
-  }
+  };
 
-  _renderGenreQuestionScreen(question) {
+  const _renderGenreQuestionScreen = (question) => {
     return (
       <GameScreen type={question.type}>
         <GenreQuestionScreenWrapped
           question={question}
-          onAnswer={this._toNextStep}
+          onAnswer={onUserAnswer}
         />
       </GameScreen>
     );
-  }
+  };
 
-  render() {
-    const {errorCount, questions} = this.props;
-    let {step} = this.state;
+  const _render = () => {
     const question = questions[step];
 
     if (step === -1) {
-      return this._renderWelcomeScreen(errorCount);
+      return _renderWelcomeScreen(maxMistakes);
     }
 
     if (question) {
       switch (question.type) {
         case GameType.ARTIST:
-          return this._renderArtistQuestionScreen(question);
+          return _renderArtistQuestionScreen(question);
         case GameType.GENRE:
-          return this._renderGenreQuestionScreen(question);
+          return _renderGenreQuestionScreen(question);
       }
     }
 
     return null;
-  }
-}
+  };
+
+  return _render();
+};
 
 Main.propTypes = {
-  errorCount: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(
       PropTypes.shape({
         type: PropTypes.string.isRequired,
@@ -102,6 +89,27 @@ Main.propTypes = {
         ).isRequired,
       }).isRequired
   ),
+  onUserAnswer: PropTypes.func.isRequired,
+  onWelcomeButtonClick: PropTypes.func.isRequired,
+  step: PropTypes.number.isRequired,
+  maxMistakes: PropTypes.number.isRequired,
 };
 
-export default Main;
+const mapStateToProps = (state) => ({
+  step: state.step,
+  maxMistakes: state.maxMistakes,
+  questions: state.questions,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onWelcomeButtonClick() {
+    dispatch(ActionCreator.incrementStep());
+  },
+  onUserAnswer(question, answer) {
+    dispatch(ActionCreator.incrementMistake(question, answer));
+    dispatch(ActionCreator.incrementStep());
+  },
+});
+
+export {Main};
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

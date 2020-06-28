@@ -7,27 +7,32 @@ import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.
 import withAudioPlayer from "../../hocs/with-audio-player/with-audio-player.js";
 const GenreQuestionScreenWrapped = withAudioPlayer(GenreQuestionScreen);
 const ArtistQuestionScreenWrapped = withAudioPlayer(ArtistQuestionScreen);
+import GameScreen from '../game-screen/game-screen.jsx';
 
 const App = (props) => {
-  const {questions, errorCount} = props;
+  const {questions} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <Main questions={questions} errorCount={errorCount} />
+          <Main />
         </Route>
         <Route exact path="/artist">
-          <ArtistQuestionScreenWrapped
-            question={questions[1]}
-            onAnswer={() => {}}
-          />
+          <GameScreen type={questions[1].type}>
+            <ArtistQuestionScreenWrapped
+              question={questions[1]}
+              onAnswer={() => {}}
+            />
+          </GameScreen>
         </Route>
         <Route exact path="/genre">
-          <GenreQuestionScreenWrapped
-            question={questions[0]}
-            onAnswer={() => {}}
-          />
+          <GameScreen type={questions[0].type}>
+            <GenreQuestionScreenWrapped
+              question={questions[0]}
+              onAnswer={() => {}}
+            />
+          </GameScreen>
         </Route>
       </Switch>
     </BrowserRouter>
@@ -35,7 +40,6 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  errorCount: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(
       PropTypes.shape({
         type: PropTypes.string.isRequired,
